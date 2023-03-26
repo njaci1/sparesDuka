@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { Store } from '../../utils/Store';
 
 export default function ProductScreen() {
-  const { state, dispatch } = useContext(Store);
+  const { dispatch } = useContext(Store);
   const { query } = useRouter();
   const { slug } = query;
   const product = data.products.find((item) => item.slug === slug);

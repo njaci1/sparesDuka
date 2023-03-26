@@ -11,36 +11,15 @@ function reducer(state, action) {
     case 'CART_ADD_ITEM': {
       const newItem = action.payload;
       const existItem = state.cart.cartItems.find(
-        (item) => item.id === newItem.id
+        (item) => item.slug === newItem.slug
       );
-      if (existItem) {
-        return {
-          ...state,
-          cart: {
-            cartItems: state.cart.cartItems.map((item) =>
-              item.id === existItem.id ? newItem : item
-            ),
-          },
-        };
-      } else {
-        return {
-          ...state,
-          cart: { cartItems: [...state.cart.cartItems, newItem] },
-        };
-      }
+      const cartItems = existItem
+        ? state.cart.cartItems.map((item) =>
+            item.name === existItem.name ? newItem : item
+          )
+        : [...state.cart.cartItems, newItem];
+      return { ...state, cart: { ...state.cart, cartItems } };
     }
-
-    case 'CART_REMOVE_ITEM': {
-      return {
-        ...state,
-        cart: {
-          cartItems: state.cart.cartItems.filter(
-            (item) => item.id !== action.payload
-          ),
-        },
-      };
-    }
-
     default:
       return state;
   }
