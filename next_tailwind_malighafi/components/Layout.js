@@ -39,7 +39,9 @@ export default function Layout({ title, children }) {
             </div>
           </nav>
         </header>
-        <main className="container m-auto mt-4 px-4">{children}</main>
+        <main className="container m-auto mt-4 px-4 justify-center items-center">
+          {children}
+        </main>
         <footer className="flex h-10 justify-center items-center shadow-inner">
           <p className="text-sm">© 2023 MaliGhafi</p>
         </footer>
