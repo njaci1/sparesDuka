@@ -1,13 +1,15 @@
-import user from '../models/User.js';
-import data from '../utils/data.js';
-import db from '../utils/db';
+import user from '../../models/User';
+import data from '../../utils/data';
+import db from '../../utils/db';
 
 const handler = async (req, res) => {
   try {
     await db.connect();
     await user.deleteMany();
-    await user.insertMany(data.users);
-    await db.disconnect();
+    console.log('Deleted all users');
+    const result = await user.insertMany(data.users);
+    console.log('inserted ', result);
+    // await db.disconnect();
     res.status(200).json({ message: 'seeded successfully' });
   } catch (error) {
     console.error(error);
