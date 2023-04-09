@@ -9,7 +9,7 @@ const handler = async (req, res) => {
     console.log('Deleted all users');
     const result = await user.insertMany(data.users);
     console.log('inserted ', result);
-    // await db.disconnect();
+    await db.disconnect();
     res.status(200).json({ message: 'seeded successfully' });
   } catch (error) {
     console.error(error);
