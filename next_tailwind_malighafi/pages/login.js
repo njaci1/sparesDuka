@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { signIn, useSession } from 'next-auth/react';
@@ -8,9 +8,9 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 
 export default function LoginScreen() {
+  const { data: session } = useSession();
   const router = useRouter();
   const { redirect } = router.query;
-  const { data: session } = useSession();
 
   useEffect(() => {
     if (session?.user) {
@@ -26,6 +26,7 @@ export default function LoginScreen() {
   } = useForm();
 
   const submitHandler = async ({ email, password }) => {
+    console.log('submitting');
     try {
       const result = await signIn('credentials', {
         redirect: false,
@@ -33,8 +34,14 @@ export default function LoginScreen() {
         password,
       });
 
+      // if (result.error) {
+      //   toast.error(result.error);
+      // }
       if (result.error) {
         toast.error(result.error);
+      } else {
+        console.log(result);
+        router.push('/');
       }
     } catch (err) {
       toast.error(getError(err));

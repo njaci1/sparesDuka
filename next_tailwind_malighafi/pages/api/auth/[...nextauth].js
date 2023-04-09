@@ -17,7 +17,7 @@ export default NextAuth({
     async session(session, token) {
       if (token?._id) session.user._id = token._id;
       if (token?.isAdmin) session.user.isAdmin = token.isAdmin;
-      console.log(session);
+      // console.log(session);
       return session;
     },
   },
@@ -30,6 +30,7 @@ export default NextAuth({
         });
         await db.disconnect();
         if (user && bcrypt.compareSync(credentials.password, user.password)) {
+          // console.log(user._id);
           return {
             _id: user._id,
             name: user.name,
