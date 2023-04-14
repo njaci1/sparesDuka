@@ -1,18 +1,17 @@
 import { useSession } from 'next-auth/react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { ToastContainer } from 'react-toastify';
+import { Menu } from '@headlessui/react';
 import 'react-toastify/dist/ReactToastify.css';
 import React, { useContext, useEffect, useState } from 'react';
 import { Store } from '../utils/Store';
-import { ToastContainer } from 'react-toastify';
 
 export default function Layout({ title, children }) {
   const { status, data: session } = useSession();
   const { state } = useContext(Store);
   const { cart } = state;
   const [cartItemsCount, setCartItemsCount] = useState(0);
-
-  // console.log(session);
 
   useEffect(() => {
     setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
@@ -45,7 +44,11 @@ export default function Layout({ title, children }) {
               {status === 'loading' ? (
                 'Loading..'
               ) : session?.user ? (
-                session.user.name
+                <Menu as="div" className="relative inline-block">
+                  <Menu.Button className="text-blue-600">
+                    {session.user.name}
+                  </Menu.Button>
+                </Menu>
               ) : (
                 <Link className="p-2" href="/login">
                   Login

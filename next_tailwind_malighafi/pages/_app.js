@@ -3,7 +3,6 @@ import { StoreProvider } from '../utils/Store';
 import { SessionProvider } from 'next-auth/react';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
-  // console.log(session);
   return (
     <SessionProvider session={session}>
       <StoreProvider>
@@ -12,5 +11,4 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     </SessionProvider>
   );
 }
-
 export default MyApp;

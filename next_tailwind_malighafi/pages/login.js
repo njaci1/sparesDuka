@@ -26,22 +26,16 @@ export default function LoginScreen() {
   } = useForm();
 
   const submitHandler = async ({ email, password }) => {
-    console.log('submitting');
     try {
       const result = await signIn('credentials', {
         redirect: false,
         email,
         password,
       });
-
-      // if (result.error) {
-      //   toast.error(result.error);
-      // }
       if (result.error) {
         toast.error(result.error);
       } else {
-        console.log(result);
-        router.push('/');
+        router.push(redirect || '/');
       }
     } catch (err) {
       toast.error(getError(err));
