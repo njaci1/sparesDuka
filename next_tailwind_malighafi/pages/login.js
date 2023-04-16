@@ -93,7 +93,9 @@ export default function LoginScreen() {
           Don&apos;t have an account? &nbsp;{' '}
           {/* //&apos is apostrophe(') and &nbsp is admin-admin2 Gv9-5kajZ952@Bn
           space */}
-          <Link href="register">Register</Link>
+          <Link id="link" href="register">
+            Register
+          </Link>
         </div>
       </form>
     </Layout>
