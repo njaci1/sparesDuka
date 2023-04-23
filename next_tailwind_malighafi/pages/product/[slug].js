@@ -4,7 +4,7 @@ import Layout from '../../components/Layout';
 import { useRouter } from 'next/router';
 // import data from '../../utils/data';
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from "next/image";
 import { Store } from '../../utils/Store';
 import db from '../../utils/db';
 import Product from '../../models/Product';
@@ -41,15 +41,18 @@ export default function ProductScreen(props) {
       <div className="py-2">
         <Link href={'/'}>Back to products</Link>
       </div>
-      <div className="grid md:grid-cols-4 md:gap-3">
+      <div className="grid md:grid-cols-4 md:gap-5">
         <div className="md:col-span-2">
           <Image
             src={product.image}
             alt={product.name}
             width={640}
             height={640}
-            layout="responsive"
-          ></Image>
+            sizes="100vw"
+            style={{
+              width: "100%",
+              height: "auto"
+            }}></Image>
         </div>
         <div>
           <ul>
@@ -73,7 +76,7 @@ export default function ProductScreen(props) {
             </li>
           </ul>
         </div>
-        <div className="card p-5 h-auto">
+        <div className="card p-5">
           <div className="mb-2 flex justify-between">
             <div>Price</div>
             <div>ksh{product.price}</div>

@@ -31,6 +31,7 @@ function reducer(state, action) {
       return { ...state, cart: { ...state.cart, cartItems } };
     }
     case 'CLEAR_CART': {
+      console.log('clearing cart');
       return {
         ...state,
         cart: {
@@ -40,7 +41,23 @@ function reducer(state, action) {
         },
       };
     }
+
+    case 'CART_RESET':
+      console.log('resetting cart');
+      return {
+        ...state,
+        cart: {
+          cartItems: [],
+          shippingAddress: { location: {} },
+          paymentMethod: '',
+        },
+      };
+
+    case 'CART_CLEAR_ITEMS':
+      return { ...state, cart: { ...state.cart, cartItems: [] } };
+
     case 'CART_SAVE_SHIPPING_ADDRESS': {
+      console.log('saving shipping address');
       return {
         ...state,
         cart: {
@@ -53,6 +70,7 @@ function reducer(state, action) {
       };
     }
     case 'CART_SAVE_PAYMENT_METHOD': {
+      console.log('saving payment method');
       return {
         ...state,
         cart: {

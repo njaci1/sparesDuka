@@ -7,13 +7,18 @@ import Cookies from 'js-cookie';
 
 export default function PaymentScreen() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
   const { shippingAddress, paymentMethod } = cart;
+
+  console.log('shippingAddress', shippingAddress);
+
   const router = useRouter();
 
   const submitHandler = (e) => {
     e.preventDefault();
+    console.log('selectedPaymentMethod', selectedPaymentMethod);
     if (!selectedPaymentMethod) {
       alert('Please select a payment method');
       return;
@@ -66,9 +71,13 @@ export default function PaymentScreen() {
           >
             Back
           </button>
-          <button className="primary-button">Next</button>
+          <button type="submit" className="primary-button">
+            Next
+          </button>
         </div>
       </form>
     </Layout>
   );
 }
+
+PaymentScreen.auth = true;

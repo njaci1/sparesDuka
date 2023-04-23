@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import axios from 'axios';
 import { Store } from '../utils/Store';
 import Layout from '../components/Layout';
-import { XCircleIcon } from '@heroicons/react/outline';
+// import { XCircleIcon } from '@heroicons/react/outline';
+import XCircleIcon from '@heroicons/react/24/outline/XCircleIcon';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -112,7 +113,13 @@ function CartScreen() {
                 </button>
               </li>
             </ul>
+            <Link id="link" href="/">
+              Continue Shopping
+            </Link>
           </div>
+          <Link id="link" href="/">
+            Continue Shopping
+          </Link>
         </div>
       )}
     </Layout>

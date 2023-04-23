@@ -22,13 +22,13 @@ export default function ShippingScreen() {
   useEffect(() => {
     setValue('fullName', shippingAddress.fullName);
     setValue('address', shippingAddress.address);
-    setValue('town', shippingAddress.town);
+    setValue('town', shippingAddress.city);
   }, [setValue, shippingAddress]);
 
-  const submitHandler = ({ fullName, address, town }) => {
+  const submitHandler = ({ fullName, address, city }) => {
     dispatch({
       type: 'SAVE_SHIPPING_ADDRESS',
-      payload: { fullName, address, town },
+      payload: { fullName, address, city },
     });
     Cookies.set(
       'cart',
@@ -37,7 +37,7 @@ export default function ShippingScreen() {
         shippingAddress: {
           fullName,
           address,
-          town,
+          city,
         },
       })
     );
@@ -84,11 +84,11 @@ export default function ShippingScreen() {
           )}
         </div>
         <div className="mb-4">
-          <label htmlFor="town">Town</label>
+          <label htmlFor="city">City</label>
           <input
             className="w-full"
-            id="town"
-            {...register('town', {
+            id="city"
+            {...register('city', {
               required: 'Please enter city',
             })}
           />
