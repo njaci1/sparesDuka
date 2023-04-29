@@ -22,7 +22,7 @@ export default function ShippingScreen() {
   useEffect(() => {
     setValue('fullName', shippingAddress.fullName);
     setValue('address', shippingAddress.address);
-    setValue('town', shippingAddress.city);
+    setValue('city', shippingAddress.city);
   }, [setValue, shippingAddress]);
 
   const submitHandler = ({ fullName, address, city }) => {
@@ -30,6 +30,7 @@ export default function ShippingScreen() {
       type: 'SAVE_SHIPPING_ADDRESS',
       payload: { fullName, address, city },
     });
+
     Cookies.set(
       'cart',
       JSON.stringify({

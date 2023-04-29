@@ -56,8 +56,7 @@ function reducer(state, action) {
     case 'CART_CLEAR_ITEMS':
       return { ...state, cart: { ...state.cart, cartItems: [] } };
 
-    case 'CART_SAVE_SHIPPING_ADDRESS': {
-      console.log('saving shipping address');
+    case 'SAVE_SHIPPING_ADDRESS': {
       return {
         ...state,
         cart: {
@@ -69,8 +68,7 @@ function reducer(state, action) {
         },
       };
     }
-    case 'CART_SAVE_PAYMENT_METHOD': {
-      console.log('saving payment method');
+    case 'SAVE_PAYMENT_METHOD': {
       return {
         ...state,
         cart: {

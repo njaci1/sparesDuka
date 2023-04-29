@@ -12,13 +12,13 @@ export default function PaymentScreen() {
   const { cart } = state;
   const { shippingAddress, paymentMethod } = cart;
 
-  console.log('shippingAddress', shippingAddress);
+  // console.log('shippingAddress', shippingAddress);
 
   const router = useRouter();
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log('selectedPaymentMethod', selectedPaymentMethod);
+
     if (!selectedPaymentMethod) {
       alert('Please select a payment method');
       return;
@@ -36,7 +36,10 @@ export default function PaymentScreen() {
 
   useEffect(() => {
     if (!shippingAddress.address) {
-      return router.push('/shipping');
+      router.push('/shipping');
+      return () => {
+        console.log('This will be logged on unmount');
+      };
     }
 
     setSelectedPaymentMethod(paymentMethod || '');
