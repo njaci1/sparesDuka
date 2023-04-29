@@ -4,7 +4,7 @@ import Layout from '../../components/Layout';
 import { useRouter } from 'next/router';
 // import data from '../../utils/data';
 import Link from 'next/link';
-import Image from "next/image";
+import Image from 'next/image';
 import { Store } from '../../utils/Store';
 import db from '../../utils/db';
 import Product from '../../models/Product';
@@ -39,9 +39,11 @@ export default function ProductScreen(props) {
   return (
     <Layout title={product.name}>
       <div className="py-2">
-        <Link href={'/'}>Back to products</Link>
+        <Link id="link" href={'/'}>
+          Back to products
+        </Link>
       </div>
-      <div className="grid md:grid-cols-4 md:gap-5">
+      <div className="grid md:grid-cols-4 md:gap-3">
         <div className="md:col-span-2">
           <Image
             src={product.image}
@@ -50,9 +52,10 @@ export default function ProductScreen(props) {
             height={640}
             sizes="100vw"
             style={{
-              width: "100%",
-              height: "auto"
-            }}></Image>
+              width: '100%',
+              height: 'auto',
+            }}
+          ></Image>
         </div>
         <div>
           <ul>
@@ -76,18 +79,28 @@ export default function ProductScreen(props) {
             </li>
           </ul>
         </div>
-        <div className="card p-5">
-          <div className="mb-2 flex justify-between">
-            <div>Price</div>
-            <div>ksh{product.price}</div>
+        <div>
+          <div className="card p-5">
+            <div className="mb-2 flex justify-between">
+              <div>Price</div>
+              <div>ksh{product.price}</div>
+            </div>
+            <div className="mb-2 flex justify-between">
+              <div>Status</div>
+              <div>{product.countInStock > 0 ? 'In stock' : 'Unavailable'}</div>
+            </div>
+            <button
+              className="primary-button w-full"
+              onClick={addToCartHandler}
+            >
+              Add to cart
+            </button>
+            <div className="py-2 flex justify-center">
+              <Link id="link" href={'/'}>
+                Back to products
+              </Link>
+            </div>
           </div>
-          <div className="mb-2 flex justify-between">
-            <div>Status</div>
-            <div>{product.countInStock > 0 ? 'In stock' : 'Unavailable'}</div>
-          </div>
-          <button className="primary-button w-full" onClick={addToCartHandler}>
-            Add to cart
-          </button>
         </div>
       </div>
     </Layout>
