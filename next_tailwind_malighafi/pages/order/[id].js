@@ -8,6 +8,7 @@ import { useEffect, useReducer } from 'react';
 import { toast } from 'react-toastify';
 import Layout from '../../components/Layout';
 import { getError } from '../../utils/error';
+import { useForm } from 'react-hook-form';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -17,14 +18,14 @@ function reducer(state, action) {
       return { ...state, loading: false, order: action.payload, error: '' };
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
-    // case 'PAY_REQUEST':
-    //   return { ...state, loadingPay: true };
-    // case 'PAY_SUCCESS':
-    //   return { ...state, loadingPay: false, successPay: true };
-    // case 'PAY_FAIL':
-    //   return { ...state, loadingPay: false, errorPay: action.payload };
-    // case 'PAY_RESET':
-    //   return { ...state, loadingPay: false, successPay: false, errorPay: '' };
+    case 'PAY_REQUEST':
+      return { ...state, loadingPay: true };
+    case 'PAY_SUCCESS':
+      return { ...state, loadingPay: false, successPay: true };
+    case 'PAY_FAIL':
+      return { ...state, loadingPay: false, errorPay: action.payload };
+    case 'PAY_RESET':
+      return { ...state, loadingPay: false, successPay: false, errorPay: '' };
 
     // case 'DELIVER_REQUEST':
     //   return { ...state, loadingDeliver: true };
@@ -44,9 +45,18 @@ function reducer(state, action) {
   }
 }
 function OrderScreen() {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const submitHandler = ({ phonenumber }) => {
+    alert('confirm transaction on your phone: ' + phonenumber);
+  };
   const { data: session } = useSession();
   // order/:id
-  //   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
   const { query } = useRouter();
   const orderId = query.id;
@@ -56,8 +66,8 @@ function OrderScreen() {
       loading,
       error,
       order,
-      //   successPay,
-      //   loadingPay,
+      successPay,
+      loadingPay,
       //   loadingDeliver,
       //   successDeliver,
     },
@@ -67,6 +77,7 @@ function OrderScreen() {
     order: {},
     error: '',
   });
+
   useEffect(() => {
     const fetchOrder = async () => {
       try {
@@ -79,37 +90,37 @@ function OrderScreen() {
     };
     if (
       !order._id ||
-      //   successPay ||
-      //   successDeliver ||
+      successPay ||
+      // || successDeliver ||
       (order._id && order._id !== orderId)
     ) {
       fetchOrder();
-      //   if (successPay) {
-      //     dispatch({ type: 'PAY_RESET' });
-      //   }
+      if (successPay) {
+        dispatch({ type: 'PAY_RESET' });
+      }
       //   if (successDeliver) {
       //     dispatch({ type: 'DELIVER_RESET' });
       //   }
+    } else {
+      const loadPaypalScript = async () => {
+        const { data: clientId } = await axios.get('/api/keys/paypal');
+        paypalDispatch({
+          type: 'resetOptions',
+          value: {
+            'client-id': clientId,
+            currency: 'USD',
+          },
+        });
+        paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
+      };
+      loadPaypalScript();
     }
-    // else {
-    //   const loadPaypalScript = async () => {
-    //     const { data: clientId } = await axios.get('/api/keys/paypal');
-    //     paypalDispatch({
-    //       type: 'resetOptions',
-    //       value: {
-    //         'client-id': clientId,
-    //         currency: 'USD',
-    //       },
-    //     });
-    //     paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
-    //   };
-    //   loadPaypalScript();
-    // }
   }, [
     order,
     orderId,
-    // paypalDispatch,
-    // successDeliver, successPay
+    paypalDispatch,
+    // successDeliver,
+    successPay,
   ]);
   const {
     shippingAddress,
@@ -274,24 +285,45 @@ function OrderScreen() {
                 </li>
                 <li>
                   <div className="mb-2 flex justify-between">
-                    <div>Total</div>
+                    <div className="font-bold">Total</div>
                     <div>${totalPrice}</div>
                   </div>
                 </li>
                 {!isPaid && (
                   <li>
-                    {/* {isPending ? (
+                    {isPending ? (
                       <div>Loading...</div>
                     ) : (
                       <div className="w-full">
-                        <PayPalButtons
+                        <form onSubmit={handleSubmit(submitHandler)}>
+                          <input
+                            className="w-full"
+                            id="phonenumber"
+                            placeholder="M-Pesa phonenumber"
+                            autoFocus
+                            {...register('phonenumber', {
+                              required: 'Please enter M-Pesa phone number',
+                            })}
+                          />
+                          {errors.phonenumber && (
+                            <div className="text-red-500">
+                              {errors.phonenumber.message}
+                            </div>
+                          )}
+                          <div className="mb-2 mt-2 flex justify-center">
+                            <button className="pay-button w-full">
+                              Pay by M-Pesa
+                            </button>
+                          </div>
+                        </form>
+                        {/* <PayPalButtons
                           createOrder={createOrder}
                           onApprove={onApprove}
                           onError={onError}
-                        ></PayPalButtons>
+                        ></PayPalButtons> */}
                       </div>
                     )}
-                    {loadingPay && <div>Loading...</div>} */}
+                    {loadingPay && <div>Loading...</div>}
                   </li>
                 )}
                 {session.user.isAdmin && order.isPaid && !order.isDelivered && (
