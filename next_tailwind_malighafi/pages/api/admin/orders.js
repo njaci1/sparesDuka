@@ -12,7 +12,7 @@ const handler = async (req, res) => {
     // const orders = await Order.find({});
     const orders = await Order.find({}).populate('user', 'name');
     await db.disconnect();
-    console.log(orders);
+
     res.send(orders);
   } else {
     return res.status(400).send({ message: 'Method not allowed' });
