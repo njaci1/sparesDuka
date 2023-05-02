@@ -135,9 +135,9 @@ export default function PlaceOrderScreen() {
                         </Link>
                       </td>
                       <td className=" p-5 text-right">{item.quantity}</td>
-                      <td className="p-5 text-right">${item.price}</td>
+                      <td className="p-5 text-right">ksh.{item.price}</td>
                       <td className="p-5 text-right">
-                        ${item.quantity * item.price}
+                        ksh.{item.quantity * item.price}
                       </td>
                     </tr>
                   ))}
@@ -157,25 +157,25 @@ export default function PlaceOrderScreen() {
                 <li>
                   <div className="mb-2 flex justify-between">
                     <div>Items</div>
-                    <div>${itemsPrice}</div>
+                    <div>ksh.{itemsPrice}</div>
                   </div>
                 </li>
                 <li>
                   <div className="mb-2 flex justify-between">
                     <div>Tax</div>
-                    <div>${taxPrice}</div>
+                    <div>ksh.{taxPrice}</div>
                   </div>
                 </li>
                 <li>
                   <div className="mb-2 flex justify-between">
                     <div>Shipping</div>
-                    <div>${shippingPrice}</div>
+                    <div>ksh.{shippingPrice}</div>
                   </div>
                 </li>
                 <li>
                   <div className="mb-2 flex justify-between">
                     <div>Total</div>
-                    <div>${totalPrice}</div>
+                    <div>ksh.{totalPrice}</div>
                   </div>
                 </li>
                 <li>

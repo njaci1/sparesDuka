@@ -101,7 +101,7 @@ function CartScreen() {
               <li>
                 <div className="pb-3 text-xl">
                   Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}){''}
-                  : ksh
+                  : ksh.
                   {cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}
                 </div>
               </li>

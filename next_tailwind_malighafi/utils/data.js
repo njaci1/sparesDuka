@@ -63,6 +63,18 @@ const data = {
       countInStock: 6,
       description: 'high quality product',
     },
+    {
+      name: 'muffler',
+      slug: 'muffler',
+      category: 'exhaust',
+      image: '/images/muffler.jpeg',
+      price: 1200,
+      brand: 'juakali',
+      rating: 4.5,
+      numReviews: 8,
+      countInStock: 6,
+      description: 'high quality product',
+    },
   ],
 };
 
