@@ -9,7 +9,8 @@ const handler = async (req, res) => {
   }
   if (req.method === 'GET') {
     await db.connect();
-    const orders = await Order.find({}).populate('User', 'name');
+    // const orders = await Order.find({});
+    const orders = await Order.find({}).populate('user', 'name');
     await db.disconnect();
     console.log(orders);
     res.send(orders);
