@@ -20,7 +20,7 @@ const postHandler = async (req, res) => {
   const newProduct = new Product({
     name: 'sample name',
     slug: 'sample-name-' + Math.random(),
-    image: '/images/shirt1.jpg',
+    image: '/images/placeholder.jpeg',
     price: 0,
     category: 'sample category',
     brand: 'sample brand',
@@ -40,4 +40,5 @@ const getHandler = async (req, res) => {
   await db.disconnect();
   res.send(products);
 };
+
 export default handler;
