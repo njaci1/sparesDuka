@@ -8,6 +8,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Store } from '../utils/Store';
 import DropdownLink from './DropdownLink';
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
+import SearchIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon';
 
 export default function Layout({ title, children }) {
   const { status, data: session } = useSession();
@@ -25,6 +27,15 @@ export default function Layout({ title, children }) {
     signOut({ callbackUrl: '/login' });
   };
 
+  const [query, setQuery] = useState('');
+
+  const router = useRouter();
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    router.push(`/search?query=${query}`);
+  };
+
   return (
     <>
       <Head>
@@ -36,9 +47,29 @@ export default function Layout({ title, children }) {
       <div className="flex min-h-full flex-col justify-between">
         <header>
           <nav className="flex h-12 justify-between shadow-md items-center ">
-            <Link id="link" className="text-lg font-bold" href="/">
+            <Link id="link" className="text-lg font-bold ml-4" href="/">
               MaliGhafi
             </Link>
+
+            <form
+              onSubmit={submitHandler}
+              className="mx-auto  hidden  justify-center md:flex"
+            >
+              <input
+                onChange={(e) => setQuery(e.target.value)}
+                type="text"
+                className="rounded-tr-none rounded-br-none p-1 text-sm   focus:ring-0"
+                placeholder="Search products"
+              />
+              <button
+                className="rounded rounded-tl-none rounded-bl-none bg-amber-300 p-1 text-sm dark:text-black"
+                type="submit"
+                id="button-addon2"
+              >
+                <SearchIcon className="h-5 w-5"></SearchIcon>
+              </button>
+            </form>
+
             <div>
               <Link id="link" className="p-2" href="/cart">
                 Cart
@@ -53,7 +84,7 @@ export default function Layout({ title, children }) {
                 'Loading..'
               ) : session?.user ? (
                 <Menu as="div" className="relative inline-block">
-                  <Menu.Button className="text-blue-600">
+                  <Menu.Button className="text-blue-600 mr-4">
                     {session.user.name}
                   </Menu.Button>
                   <Menu.Items className="absolute right-0 w-56 origin-top-right  shadow-lg ">
