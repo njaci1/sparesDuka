@@ -10,6 +10,7 @@ import { useEffect, useReducer } from 'react';
 import Layout from '../../components/Layout';
 import { getError } from '../../utils/error';
 import { useForm } from 'react-hook-form';
+// import { checkout } from '../../utils/mpesa';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -21,6 +22,8 @@ function reducer(state, action) {
       return { ...state, loading: false, error: action.payload };
     case 'PAY_REQUEST':
       return { ...state, loadingPay: true };
+    case 'PUSH_SUCCESS':
+      return { ...state, loadingPay: false, successPush: true };
     case 'PAY_SUCCESS':
       return { ...state, loadingPay: false, successPay: true };
     case 'PAY_FAIL':
@@ -52,15 +55,30 @@ function OrderScreen() {
     formState: { errors },
   } = useForm();
 
-  const submitHandler = ({ phonenumber }) => {
-    alert('confirm transaction on your phone: ' + phonenumber);
-  };
   const { data: session } = useSession();
   // order/:id
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
   const { query } = useRouter();
   const orderId = query.id;
+
+  const submitHandler = async ({ phonenumber }) => {
+    try {
+      dispatch({ type: 'PAY_REQUEST' });
+      const { data } = await axios.put(`/api/orders/${order._id}/mpesaPush`, {
+        phonenumber,
+        totalPrice,
+        orderId,
+      });
+      if (data.result.ResultCode == 0) {
+        dispatch({ type: 'PUSH_SUCCESS', payload: data });
+        alert('confirm transaction on your phone: ' + phonenumber);
+      }
+    } catch (err) {
+      dispatch({ type: 'PAY_FAIL', payload: getError(err) });
+      alert('Payment failed, try again');
+    }
+  };
 
   const [
     {
@@ -91,6 +109,7 @@ function OrderScreen() {
     };
     if (
       !order._id ||
+      // successPush ||
       successPay ||
       // || successDeliver ||
       (order._id && order._id !== orderId)
@@ -160,7 +179,7 @@ function OrderScreen() {
   //         details
   //       );
   //       dispatch({ type: 'PAY_SUCCESS', payload: data });
-  //       toast.success('Order is paid successgully');
+  //       toast.success('Order is paid successfully');
   //     } catch (err) {
   //       dispatch({ type: 'PAY_FAIL', payload: getError(err) });
   //       toast.error(getError(err));

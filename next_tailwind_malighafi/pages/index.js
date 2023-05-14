@@ -52,7 +52,11 @@ export default function Home({ products, featuredProducts }) {
                   src={product.banner}
                   alt={product.name}
                   width={1000}
-                  height={100}
+                  height={50}
+                  style={{
+                    maxWidth: '100%',
+                    height: 'auto',
+                  }}
                 ></Image>
               </a>
             </Link>

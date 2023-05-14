@@ -37,9 +37,6 @@ export default function PaymentScreen() {
   useEffect(() => {
     if (!shippingAddress.address) {
       return router.push('/shipping');
-      // return () => {
-      //   console.log('This will be logged on unmount');
-      // };
     }
 
     setSelectedPaymentMethod(paymentMethod || '');
