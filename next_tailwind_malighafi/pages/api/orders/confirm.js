@@ -3,7 +3,7 @@
 
 const handler = async (req, res) => {
   //   const order = req.body;
-  console.log(req);
+  console.log(req.body);
 
   // await db.connect();
 
