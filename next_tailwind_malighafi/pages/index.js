@@ -64,7 +64,7 @@ export default function Home({ products, featuredProducts }) {
         ))}
       </Carousel>
       <h1 className="h2 my-4 text-2xl">Latest Products</h1>
-      <div className="grid grid-cols-5 gap-3 md:grid-cols-3 lg:grid-cols-5">
+      <div className="grid grid-cols-5 gap-3 md:grid-cols-3  lg:grid-cols-5 overflow-x-auto">
         <div className="my-3">
           <h2>Search</h2>
           <form
