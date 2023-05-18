@@ -27,7 +27,7 @@ const handler = async (req, res) => {
     // await db.disconnect();
     // res.send({ message: 'order paid successfully', order: paidOrder });
     const result = await mpesaPush(req.body.phonenumber, req.body.totalPrice);
-    console.log(result);
+    // console.log(result);
     if (result) {
       res.send({ result });
       order.isPaid = true;
