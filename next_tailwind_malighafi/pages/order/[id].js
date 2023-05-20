@@ -1,5 +1,3 @@
-import { usePayPalScriptReducer } from '@paypal/react-paypal-js';
-// import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -23,11 +21,24 @@ function reducer(state, action) {
     case 'PAY_REQUEST':
       return { ...state, loadingPay: true };
     case 'PUSH_SUCCESS':
-      return { ...state, loadingPay: false, successPush: true };
+      return {
+        ...state,
+        loadingPay: false,
+        successPay: true,
+      };
     case 'PAY_SUCCESS':
-      return { ...state, loadingPay: false, successPay: true };
+      return {
+        ...state,
+        loadingPay: false,
+        successPay: true,
+      };
     case 'PAY_FAIL':
-      return { ...state, loadingPay: false, errorPay: action.payload };
+      return {
+        ...state,
+        loadingPay: false,
+        successPay: true,
+        errorPay: action.payload,
+      };
     case 'PAY_RESET':
       return { ...state, loadingPay: false, successPay: false, errorPay: '' };
 
@@ -49,36 +60,12 @@ function reducer(state, action) {
   }
 }
 function OrderScreen() {
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm();
-
   const { data: session } = useSession();
   // order/:id
-  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+  // const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
   const { query } = useRouter();
   const orderId = query.id;
-
-  const submitHandler = async ({ phonenumber }) => {
-    try {
-      dispatch({ type: 'PAY_REQUEST' });
-      const { data } = await axios.put(`/api/orders/${order._id}/mpesaPush`, {
-        phonenumber,
-        totalPrice,
-        orderId,
-      });
-      if (data.result.ResultCode == 0) {
-        dispatch({ type: 'PUSH_SUCCESS', payload: data });
-        alert('confirm transaction on your phone: ' + phonenumber);
-      }
-    } catch (err) {
-      dispatch({ type: 'PAY_FAIL', payload: getError(err) });
-      alert('Payment failed, try again');
-    }
-  };
 
   const [
     {
@@ -87,6 +74,7 @@ function OrderScreen() {
       order,
       successPay,
       loadingPay,
+      // successPush,
       //   loadingDeliver,
       //   successDeliver,
     },
@@ -118,31 +106,36 @@ function OrderScreen() {
       if (successPay) {
         dispatch({ type: 'PAY_RESET' });
       }
+      // if (successPush) {
+      //     dispatch({ type: 'PUSH_SUCCESS' });
+      //   }
       //   if (successDeliver) {
       //     dispatch({ type: 'DELIVER_RESET' });
       //   }
     } else {
-      const loadPaypalScript = async () => {
-        const { data: clientId } = await axios.get('/api/keys/paypal');
-        paypalDispatch({
-          type: 'resetOptions',
-          value: {
-            'client-id': clientId,
-            currency: 'USD',
-          },
-        });
-        paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
-      };
-      loadPaypalScript();
+      // const loadPaypalScript = async () => {
+      //   const { data: clientId } = await axios.get('/api/keys/paypal');
+      //   paypalDispatch({
+      //     type: 'resetOptions',
+      //     value: {
+      //       'client-id': clientId,
+      //       currency: 'USD',
+      //     },
+      //   });
+      //   paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
+      // };
+      // loadPaypalScript();
     }
   }, [
     order,
     orderId,
-    paypalDispatch,
+    // successPush,
     // successDeliver,
     successPay,
   ]);
   const {
+    // pendingConfirmation = true,
+    paymentResult,
     shippingAddress,
     paymentMethod,
     orderItems,
@@ -155,6 +148,35 @@ function OrderScreen() {
     isDelivered,
     deliveredAt,
   } = order;
+
+  console.log(order);
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const submitHandler = async ({ phonenumber }) => {
+    try {
+      dispatch({ type: 'PAY_REQUEST' });
+      const { data } = await axios.put(`/api/orders/${order._id}/mpesaPush`, {
+        phonenumber,
+        totalPrice,
+        orderId,
+      });
+      if (data.result.ResultCode == 0) {
+        console.log(data.result);
+        // paymentResult = { status: 'pending_confirmation' };
+        dispatch({ type: 'PUSH_SUCCESS' });
+        alert('confirm transaction on your phone: ' + phonenumber);
+      }
+    } catch (err) {
+      // paymentResult = { status: 'failed' };
+      dispatch({ type: 'PAY_FAIL' });
+      alert('Payment failed, try again');
+    }
+  };
 
   // function createOrder(data, actions) {
   //   return actions.order
@@ -231,7 +253,10 @@ function OrderScreen() {
             <div className="card p-5">
               <h2 className="mb-2 text-lg">Payment Method</h2>
               <div>{paymentMethod}</div>
-              {isPaid ? (
+              {paymentResult &&
+              paymentResult.status === 'pending_confirmation' ? (
+                <div className="alert-pending">Pending Confirmation</div>
+              ) : isPaid ? (
                 <div className="alert-success">Paid at {paidAt}</div>
               ) : (
                 <div className="alert-error">Not paid</div>
@@ -309,11 +334,10 @@ function OrderScreen() {
                     <div>ksh.{totalPrice}</div>
                   </div>
                 </li>
+                {/* display pay by mpesa button if order not paid   */}
                 {!isPaid && (
                   <li>
-                    {isPending ? (
-                      <div>Loading...</div>
-                    ) : (
+                    {
                       <div className="w-full">
                         <form onSubmit={handleSubmit(submitHandler)}>
                           <input
@@ -336,16 +360,34 @@ function OrderScreen() {
                             </button>
                           </div>
                         </form>
-                        {/* <PayPalButtons
-                          createOrder={createOrder}
-                          onApprove={onApprove}
-                          onError={onError}
-                        ></PayPalButtons> */}
                       </div>
-                    )}
+                    }
                     {loadingPay && <div>Loading...</div>}
                   </li>
                 )}
+                {/* display confirm button if order paid but not confirmed */}
+                {paymentResult &&
+                  paymentResult.status === 'pending_confirmation' && (
+                    <li>
+                      {
+                        <div className="w-full">
+                          <form onSubmit={handleSubmit(submitHandler)}>
+                            {errors.phonenumber && (
+                              <div className="text-red-500">
+                                {errors.phonenumber.message}
+                              </div>
+                            )}
+                            <div className="mb-2 mt-2 flex justify-center">
+                              <button className="confirm-button w-full">
+                                Confirm
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                      }
+                      {loadingPay && <div>Loading...</div>}
+                    </li>
+                  )}
                 {session.user.isAdmin && order.isPaid && !order.isDelivered && (
                   <li>
                     {/* {loadingDeliver && <div>Loading...</div>}

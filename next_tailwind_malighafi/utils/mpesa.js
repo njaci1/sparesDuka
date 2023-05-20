@@ -26,6 +26,7 @@ export default async function checkout(phoneNumber, amount) {
     .then((res) => res.json())
     .then((data) => {
       const token = data.access_token;
+      console.log('successfully fetched token');
 
       const url =
         'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
@@ -62,8 +63,9 @@ export default async function checkout(phoneNumber, amount) {
         .then((res) => res.json())
         .then((data) => {
           // insert this request to db
-          // console.log(data);
+          console.log('successfully pushed to mpesa: ');
           if (data.ResponseCode == 0) {
+            console.log('user accepted mpesa push');
             // db.insertPending(data.CheckoutRequestID, phoneNumber, amount, Date.now());
             // // return response
             return {

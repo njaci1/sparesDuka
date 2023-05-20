@@ -40,6 +40,9 @@ body {
 .pay-button {
   @apply rounded bg-green-300 py-2 px-4 shadow outline-none hover:bg-green-400 active:bg-green-600;
 }
+.confirm-button {
+  @apply rounded bg-yellow-300 py-2 px-4 shadow outline-none hover:bg-yellow-400 active:bg-yellow-600;
+}
 
 input,
 select,
@@ -53,6 +56,9 @@ textarea {
 
 .alert-error {
   @apply my-3 rounded-lg bg-red-100 p-3 text-red-700;
+}
+.alert-pending {
+  @apply my-3 rounded-lg bg-yellow-100 p-3 text-yellow-700;
 }
 
 .alert-success {

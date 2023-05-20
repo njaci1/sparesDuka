@@ -2,6 +2,9 @@ import Order from '../../../models/Order';
 import db from '../../../utils/db';
 
 const handler = async (req, res) => {
+  if (req.method !== 'POST') {
+    return res.status(405).end();
+  }
   const obj = JSON.parse(req.body);
 
   const requestID = obj.Body.stkCallback.CheckoutRequestID;
