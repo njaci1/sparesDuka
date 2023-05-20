@@ -178,6 +178,16 @@ function OrderScreen() {
     }
   };
 
+  const handleConfirm = async () => {
+    try {
+      dispatch({ type: 'FETCH_REQUEST' });
+      const { data } = await axios.get(`/api/orders/${orderId}`);
+      dispatch({ type: 'FETCH_SUCCESS', payload: data });
+    } catch (err) {
+      dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
+    }
+  };
+
   // function createOrder(data, actions) {
   //   return actions.order
   //     .create({
@@ -371,7 +381,7 @@ function OrderScreen() {
                     <li>
                       {
                         <div className="w-full">
-                          <form onSubmit={handleSubmit(submitHandler)}>
+                          <form onSubmit={handleSubmit(handleConfirm)}>
                             {errors.phonenumber && (
                               <div className="text-red-500">
                                 {errors.phonenumber.message}
