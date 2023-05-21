@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import Link from 'next/link';
 import SearchIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon';
 
