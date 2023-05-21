@@ -62,12 +62,13 @@ export default function Home({ products, featuredProducts }) {
         ))}
       </Carousel>
       <h1 className="h2 my-4 text-2xl">Latest Products</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 overflow-x-auto">
+      {/* <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 overflow-x-auto"> */}
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 auto-rows-min h-auto w-full overflow-x-auto">
         <div className="my-3">
           <h2>Search</h2>
           <form
             onSubmit={submitHandler}
-            className="mx-auto justify-left md:flex"
+            className="mx-auto flex items-center justify-left md:flex"
           >
             <input
               onChange={(e) => setQuery(e.target.value)}
