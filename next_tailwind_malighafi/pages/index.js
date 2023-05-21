@@ -43,24 +43,30 @@ export default function Home({ products, featuredProducts }) {
 
   return (
     <Layout>
-      <Carousel showThumbs={false} infiniteLoop height={50}>
-        {featuredProducts.map((product) => (
-          <div key={product._id}>
-            <Link legacyBehavior href={`/product/${product.slug}`} passHref>
-              <a className="flex">
-                <Image
-                  src={product.banner}
-                  alt={product.name}
-                  width={1000}
-                  height={500}
-                  layout="responsive"
-                  objectFit="cover"
-                ></Image>
-              </a>
-            </Link>
-          </div>
-        ))}
-      </Carousel>
+      <div className="relative sticky top-0 z-40 h-32 md:h-48 lg:h-64 overflow-hidden">
+        <Carousel showThumbs={false} infiniteLoop autoPlay>
+          {featuredProducts.map((product) => (
+            <div key={product._id}>
+              <Link legacyBehavior href={`/product/${product.slug}`} passHref>
+                <a className="flex">
+                  <Image
+                    src={product.banner}
+                    alt={product.name}
+                    width={1000}
+                    height={100}
+                    style={{
+                      maxWidth: '100%',
+                      height: 'auto',
+                    }}
+                    layout="responsive"
+                    objectFit="cover"
+                  ></Image>
+                </a>
+              </Link>
+            </div>
+          ))}
+        </Carousel>
+      </div>
       <h1 className="h2 my-4 text-2xl">Latest Products</h1>
       {/* <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 overflow-x-auto"> */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 auto-rows-min h-auto w-full overflow-x-auto">

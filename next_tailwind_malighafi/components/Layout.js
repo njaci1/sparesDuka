@@ -45,7 +45,7 @@ export default function Layout({ title, children }) {
       </Head>
       <ToastContainer position="bottom-center" limit={1} />
       <div className="flex min-h-full flex-col justify-between">
-        <header>
+        <header className="shadow bg-white sticky top-0 z-50">
           <nav className="flex h-12 justify-between shadow-md items-center ">
             <Link id="link" className="text-lg font-bold ml-4" href="/">
               MaliGhafi
