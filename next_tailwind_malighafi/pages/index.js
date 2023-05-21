@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import Link from 'next/link';
 import SearchIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon';
 
@@ -63,7 +63,8 @@ export default function Home({ products, featuredProducts }) {
       </Carousel>
       <h1 className="h2 my-4 text-2xl">Latest Products</h1>
       {/* <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 overflow-x-auto"> */}
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 auto-rows-min h-auto w-full overflow-x-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 auto-rows-min h-auto w-full overflow-x-auto">
+        {/* <div className="flex flex-wrap justify-between"> */}
         <div className="my-3">
           <h2>Search</h2>
           <form
@@ -98,7 +99,8 @@ export default function Home({ products, featuredProducts }) {
             <option value="newest">Newest Arrivals</option>
           </select>
         </div>
-        <div className="my-3">
+
+        <div className="my-3 hidden md:block">
           <h2>Categories</h2>
           <select
             className="w-full"
@@ -114,7 +116,7 @@ export default function Home({ products, featuredProducts }) {
                 ))} */}
           </select>
         </div>
-        <div className="my-3">
+        <div className="my-3 hidden md:block">
           <h2>Brands</h2>
           <select
             className="w-full"
@@ -129,7 +131,7 @@ export default function Home({ products, featuredProducts }) {
                 ))} */}
           </select>
         </div>
-        <div className="my-3">
+        <div className="my-3 hidden md:block">
           <h2>Prices</h2>
           <select
             className="w-full"
@@ -144,6 +146,7 @@ export default function Home({ products, featuredProducts }) {
                 ))} */}
           </select>
         </div>
+        {/* </div> */}
       </div>
 
       {/* <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4"> */}
