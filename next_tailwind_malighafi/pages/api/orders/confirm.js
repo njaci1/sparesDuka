@@ -30,6 +30,11 @@ const handler = async (req, res) => {
       order.save();
       console.log('order confirmation successful');
     } else {
+      order.isPaid = false;
+      order.paymentResult = {
+        status: 'failed',
+      };
+      order.save();
       console.log('order not paid');
     }
   } else {
