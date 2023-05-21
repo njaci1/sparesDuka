@@ -8,7 +8,6 @@ import { useEffect, useReducer } from 'react';
 import Layout from '../../components/Layout';
 import { getError } from '../../utils/error';
 import { useForm } from 'react-hook-form';
-// import { checkout } from '../../utils/mpesa';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -74,7 +73,7 @@ function OrderScreen() {
       order,
       successPay,
       loadingPay,
-      // successPush,
+
       //   loadingDeliver,
       //   successDeliver,
     },

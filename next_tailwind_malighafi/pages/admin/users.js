@@ -22,18 +22,37 @@ function reducer(state, action) {
       return { ...state, loadingDelete: false };
     case 'DELETE_RESET':
       return { ...state, loadingDelete: false, successDelete: false };
+
+    case 'UPDATE_REQUEST':
+      return { ...state, loadingEdit: true };
+    case 'UPDATE_SUCCESS':
+      return { ...state, loadingEdit: false, successEdit: true };
+    case 'UPDATE_FAIL':
+      return { ...state, loadingEdit: false };
+    case 'UPDATE_RESET':
+      return { ...state, loadingEdit: false, successEdit: false };
     default:
       return state;
   }
 }
 
 function AdminUsersScreen() {
-  const [{ loading, error, users, successDelete, loadingDelete }, dispatch] =
-    useReducer(reducer, {
-      loading: true,
-      users: [],
-      error: '',
-    });
+  const [
+    {
+      loading,
+      error,
+      users,
+      successEdit,
+      loadingEdit,
+      successDelete,
+      loadingDelete,
+    },
+    dispatch,
+  ] = useReducer(reducer, {
+    loading: true,
+    users: [],
+    error: '',
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,7 +69,7 @@ function AdminUsersScreen() {
     } else {
       fetchData();
     }
-  }, [successDelete]);
+  }, [successDelete, successEdit]);
 
   const deleteHandler = async (userId) => {
     if (!window.confirm('Are you sure?')) {
@@ -67,6 +86,20 @@ function AdminUsersScreen() {
     }
   };
 
+  const updateHandler = async (userId) => {
+    if (!window.confirm('Update user to Admin?')) {
+      return;
+    }
+    try {
+      dispatch({ type: 'UPDATE_REQUEST' });
+      await axios.put(`/api/admin/users/${userId}`);
+      dispatch({ type: 'UPDATE_SUCCESS' });
+      toast.success('User updated to admin successfully');
+    } catch (err) {
+      dispatch({ type: 'UPDATE_FAIL' });
+      toast.error(getError(err));
+    }
+  };
   return (
     <Layout title="Users">
       <div className="grid md:grid-cols-4 md:gap-5">
@@ -90,6 +123,7 @@ function AdminUsersScreen() {
         </div>
         <div className="overflow-x-auto md:col-span-3">
           <h1 className="mb-4 text-xl">Users</h1>
+          {loadingEdit && <div>Updating user to Admin...</div>}
           {loadingDelete && <div>Deleting...</div>}
           {loading ? (
             <div>Loading...</div>
@@ -115,7 +149,7 @@ function AdminUsersScreen() {
                       <td className=" p-5 ">{user.email}</td>
                       <td className=" p-5 ">{user.isAdmin ? 'YES' : 'NO'}</td>
                       <td className=" p-5 ">
-                        <Link
+                        {/* <Link
                           id="link"
                           href={`/admin/user/${user._id}`}
                           passHref
@@ -123,7 +157,14 @@ function AdminUsersScreen() {
                           className="default-button"
                         >
                           Edit
-                        </Link>
+                        </Link> */}
+                        <button
+                          type="button"
+                          className="default-button"
+                          onClick={() => updateHandler(user._id)}
+                        >
+                          Update
+                        </button>
                         &nbsp;
                         <button
                           type="button"

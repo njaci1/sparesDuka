@@ -10,6 +10,8 @@ const handler = async (req, res) => {
 
   if (req.method === 'DELETE') {
     return deleteHandler(req, res);
+  } else if (req.method === 'PUT') {
+    return updateHandler(req, res);
   } else {
     return res.status(400).send({ message: 'Method not allowed' });
   }
@@ -25,6 +27,23 @@ const deleteHandler = async (req, res) => {
     await User.findByIdAndRemove(req.query.id);
     await db.disconnect();
     res.send({ message: 'User Deleted' });
+  } else {
+    await db.disconnect();
+    res.status(404).send({ message: 'User Not Found' });
+  }
+};
+
+const updateHandler = async (req, res) => {
+  await db.connect();
+  const user = await User.findById(req.query.id);
+  if (user) {
+    if (user.email === 'admin@example.com') {
+      return res.status(400).send({ message: 'Can not edit super admin' });
+    }
+    user.isAdmin = true;
+    await user.save();
+    await db.disconnect();
+    res.send({ message: 'User updated to Admin' });
   } else {
     await db.disconnect();
     res.status(404).send({ message: 'User Not Found' });
