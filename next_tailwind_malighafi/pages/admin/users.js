@@ -160,7 +160,7 @@ function AdminUsersScreen() {
                         </Link> */}
                         <button
                           type="button"
-                          className="default-button"
+                          className="update-button"
                           onClick={() => updateHandler(user._id)}
                         >
                           Update
@@ -168,7 +168,7 @@ function AdminUsersScreen() {
                         &nbsp;
                         <button
                           type="button"
-                          className="default-button"
+                          className="delete-button"
                           onClick={() => deleteHandler(user._id)}
                         >
                           Delete
