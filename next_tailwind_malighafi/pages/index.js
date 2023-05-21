@@ -67,7 +67,7 @@ export default function Home({ products, featuredProducts }) {
           <h2>Search</h2>
           <form
             onSubmit={submitHandler}
-            className="mx-auto  hidden  justify-left md:flex"
+            className="mx-auto justify-left md:flex"
           >
             <input
               onChange={(e) => setQuery(e.target.value)}
