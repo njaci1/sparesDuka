@@ -43,8 +43,8 @@ export default function Home({ products, featuredProducts }) {
 
   return (
     <Layout>
-      <div className="relative sticky top-0 z-40 h-32 md:h-48 lg:h-64 overflow-hidden">
-        <Carousel showThumbs={false} infiniteLoop autoPlay>
+      <div className="relative sticky top-0 z-40 h-32 md:h-42 lg:h-52 overflow-hidden">
+        <Carousel showThumbs={true} infiniteLoop>
           {featuredProducts.map((product) => (
             <div key={product._id}>
               <Link legacyBehavior href={`/product/${product.slug}`} passHref>
@@ -58,8 +58,6 @@ export default function Home({ products, featuredProducts }) {
                       maxWidth: '100%',
                       height: 'auto',
                     }}
-                    layout="responsive"
-                    objectFit="cover"
                   ></Image>
                 </a>
               </Link>
