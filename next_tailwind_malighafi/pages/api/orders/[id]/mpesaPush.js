@@ -13,6 +13,7 @@ const handler = async (req, res) => {
   const order = await Order.findById(req.query.id);
   if (order) {
     if (order.isPaid) {
+      await db.disconnect();
       return res.status(400).send({ message: 'Error: order is already paid' });
     }
     // order.isPaid = true;
@@ -42,6 +43,7 @@ const handler = async (req, res) => {
       order.save();
       await db.disconnect();
     } else {
+      // await db.disconnect();
       res.send({ message: 'failed to push to M-Pesa' });
     }
   } else {

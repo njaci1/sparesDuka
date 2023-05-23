@@ -65,9 +65,8 @@ export default async function checkout(phoneNumber, amount) {
           // insert this request to db
           console.log('successfully pushed to mpesa: ');
           if (data.ResponseCode == 0) {
-            console.log('user accepted mpesa push');
-            // db.insertPending(data.CheckoutRequestID, phoneNumber, amount, Date.now());
-            // // return response
+            console.log('push request successful to users phone');
+
             return {
               ResultCode: data.ResponseCode,
               CheckoutRequestID: data.CheckoutRequestID,

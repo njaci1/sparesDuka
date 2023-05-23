@@ -173,7 +173,7 @@ function OrderScreen() {
     } catch (err) {
       // paymentResult = { status: 'failed' };
       dispatch({ type: 'PAY_FAIL' });
-      alert('Payment failed, try again');
+      alert('Payment failed, check phone number and try again');
     }
   };
 
