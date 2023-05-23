@@ -27,18 +27,21 @@ const handler = async (req, res) => {
       };
       order.paymentResultCode = resultCode;
       order.paymentConfirmedAt = Date.now();
-      order.save();
+      await order.save();
       console.log('order confirmation successful');
+      await db.disconnect();
     } else {
       order.isPaid = false;
       order.paymentResult = {
         status: 'failed',
       };
-      order.save();
+      await order.save();
       console.log('order not paid');
+      await db.disconnect();
     }
   } else {
     console.log('order not found');
+    await db.disconnect();
   }
 
   await db.disconnect();

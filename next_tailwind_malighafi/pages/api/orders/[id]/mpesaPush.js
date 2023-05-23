@@ -40,10 +40,10 @@ const handler = async (req, res) => {
         phonenumber: req.body.phonenumber,
         email_address: 'null',
       };
-      order.save();
+      await order.save();
       await db.disconnect();
     } else {
-      // await db.disconnect();
+      await db.disconnect();
       res.send({ message: 'failed to push to M-Pesa' });
     }
   } else {
