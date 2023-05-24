@@ -365,7 +365,7 @@ function OrderScreen() {
                           )}
                           <div className="mb-2 mt-2 flex justify-center">
                             <button className="pay-button w-full">
-                              Pay by M-Pesa
+                              M-Pesa Pay
                             </button>
                           </div>
                         </form>

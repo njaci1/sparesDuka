@@ -10,7 +10,7 @@ export default async function checkout(phoneNumber, amount) {
   const seconds = ('0' + now.getSeconds()).slice(-2);
   const timestamp = `${year}${month}${day}${hours}${minutes}${seconds}`;
 
-  const auth = btoa('uD8Ff5UsgMjRVJ11UsXDYFgFZNsLXxAI:SDaZ8NPlISdPLUGW');
+  const auth = btoa(process.env.MPESA_AUTH_CODE);
   // get passkey options
   var urlAuth =
     'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials';
@@ -30,9 +30,9 @@ export default async function checkout(phoneNumber, amount) {
 
       const url =
         'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
-      //'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
-      const passkey =
-        'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919';
+
+      const passkey = process.env.MPESA_KEY;
+      // 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919';
       const businessShortCode = 174379;
       const encodedPasswd = btoa(businessShortCode + passkey + timestamp);
       const options = {
