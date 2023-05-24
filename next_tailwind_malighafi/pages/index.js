@@ -8,11 +8,10 @@ import { useContext, useState } from 'react';
 import { Store } from '../utils/Store';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import { Carousel } from 'react-responsive-carousel';
+// import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import Image from 'next/image';
-import Link from 'next/link';
 import SearchIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon';
+import Carousel from '../components/Carousel';
 
 export default function Home({ products, featuredProducts }) {
   const { state, dispatch } = useContext(Store);
@@ -44,26 +43,7 @@ export default function Home({ products, featuredProducts }) {
   return (
     <Layout>
       <div className="relative sticky top-0 z-40 h-32 md:h-42 lg:h-52 overflow-hidden">
-        <Carousel showThumbs={true} infiniteLoop>
-          {featuredProducts.map((product) => (
-            <div key={product._id}>
-              <Link legacyBehavior href={`/product/${product.slug}`} passHref>
-                <a className="flex">
-                  <Image
-                    src={product.banner}
-                    alt={product.name}
-                    width={1000}
-                    height={100}
-                    style={{
-                      maxWidth: '100%',
-                      height: 'auto',
-                    }}
-                  ></Image>
-                </a>
-              </Link>
-            </div>
-          ))}
-        </Carousel>
+        <Carousel products={featuredProducts}></Carousel>
       </div>
       <h1 className="h2 my-4 text-2xl">Latest Products</h1>
       {/* <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 overflow-x-auto"> */}
