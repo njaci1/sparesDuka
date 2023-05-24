@@ -1,6 +1,6 @@
 export default async function checkout(phoneNumber, amount) {
   console.log(`checkout called with amount: ${amount}, phone: ${phoneNumber}`);
-
+  phoneNumber = '254' + phoneNumber.slice(-9);
   const now = new Date();
   const year = now.getFullYear();
   const month = ('0' + (now.getMonth() + 1)).slice(-2);
