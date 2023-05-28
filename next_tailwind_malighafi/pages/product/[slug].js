@@ -60,7 +60,9 @@ export default function ProductScreen(props) {
         <div>
           <ul>
             <li>
-              <h1 className="text-lg">{product.name}</h1>
+              <h1 className="text-lg">
+                <strong>{product.name}</strong>
+              </h1>
             </li>
             <li>
               <p className="text-sm">Brand: {product.brand}</p>
@@ -78,6 +80,34 @@ export default function ProductScreen(props) {
               <p className="text-sm">Description: {product.description}</p>
             </li>
           </ul>
+          {product.compatibleVehicles &&
+            product.compatibleVehicles.length > 0 && (
+              <div className="w-full">
+                <table className="table-auto w-full text-left border-collapse">
+                  <thead>
+                    <tr text-sm font-medium text-gray-700 text-left bg-gray-200>
+                      <th className="px-2 py-1" colspan="3">
+                        Compatibility
+                      </th>
+                    </tr>
+                    <tr text-sm font-medium text-gray-700 text-left bg-gray-200>
+                      <th className="w-1/3">Make</th>
+                      <th className="w-1/3">Model</th>
+                      <th className="w-1/3">YoM</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {product.compatibleVehicles.map((vehicle, i) => (
+                      <tr key={i}>
+                        <td>{vehicle.make}</td>
+                        <td>{vehicle.model}</td>
+                        <td>{vehicle.year}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
         </div>
         <div>
           <div className="card p-5">
@@ -111,7 +141,10 @@ export async function getServerSideProps(context) {
   const { params } = context;
   const { slug } = params;
   await db.connect();
-  const product = await Product.findOne({ slug }).lean();
+  const data = await Product.findOne({ slug }).lean();
+  let product = JSON.parse(JSON.stringify(data));
+  console.log(product);
+
   await db.disconnect();
   return {
     props: {
