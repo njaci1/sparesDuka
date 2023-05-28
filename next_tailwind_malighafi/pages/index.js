@@ -42,10 +42,10 @@ export default function Home({ products, featuredProducts }) {
 
   return (
     <Layout>
-      <div className="relative sticky top-0 z-40 h-32 md:h-42 lg:h-52 overflow-hidden">
+      <div className="sticky top-0 z-40 h-32 md:h-42 lg:h-52 overflow-hidden">
         <Carousel products={featuredProducts}></Carousel>
       </div>
-      <h1 className="h2 my-4 text-2xl">Latest Products</h1>
+      {/* <h1 className="h2 my-4 text-2xl">Latest Products</h1> */}
       {/* <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 overflow-x-auto"> */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 auto-rows-min h-auto w-full overflow-x-auto">
         {/* <div className="flex flex-wrap justify-between"> */}

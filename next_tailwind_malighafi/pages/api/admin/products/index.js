@@ -26,6 +26,9 @@ const postHandler = async (req, res) => {
     brand: 'sample brand',
     countInStock: 0,
     description: 'sample description',
+    compatibleVehicles: [
+      { make: 'All Makes', model: 'All Models', year: 'All Years' },
+    ],
     rating: 0,
     numReviews: 0,
   });

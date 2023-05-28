@@ -1,15 +1,15 @@
 import Product from '../../models/Product';
-import user from '../../models/User';
+// import user from '../../models/User';
 import data from '../../utils/data';
 import db from '../../utils/db';
 
 const handler = async (req, res) => {
   try {
     await db.connect();
-    await user.deleteMany();
-    console.log('Deleted all users');
-    const result = await user.insertMany(data.users);
-    console.log('inserted ', result);
+    // await user.deleteMany();
+    // console.log('Deleted all users');
+    // const result = await user.insertMany(data.users);
+    // console.log('inserted ', result);
     await Product.deleteMany();
     await Product.insertMany(data.products);
     await db.disconnect();

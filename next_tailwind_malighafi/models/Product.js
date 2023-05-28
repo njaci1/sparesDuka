@@ -13,6 +13,13 @@ const productSchema = new mongoose.Schema(
     countInStock: { type: Number, required: true, default: 0 },
     description: { type: String, required: true },
     isFeatured: { type: Boolean, default: false },
+    compatibleVehicles: [
+      {
+        make: String,
+        model: String,
+        year: String,
+      },
+    ],
     banner: String,
   },
   {

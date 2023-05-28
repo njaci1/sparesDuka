@@ -22,9 +22,11 @@ const getHandler = async (req, res) => {
   await db.connect();
   const product = await Product.findById(req.query.id);
   await db.disconnect();
+  // console.log(product.compatibleVehicles.length);
   res.send(product);
 };
 const putHandler = async (req, res) => {
+  console.log(req.body);
   await db.connect();
   const product = await Product.findById(req.query.id);
   if (product) {
@@ -36,6 +38,7 @@ const putHandler = async (req, res) => {
     product.brand = req.body.brand;
     product.countInStock = req.body.countInStock;
     product.description = req.body.description;
+    product.compatibleVehicles = req.body.compatibleVehicles;
     await product.save();
     await db.disconnect();
     res.send({ message: 'Product updated successfully' });
