@@ -98,7 +98,10 @@ export default function LoginScreen() {
             type="password"
             {...register('password', {
               required: 'Please enter password',
-              minLength: { value: 6, message: 'password is more than 5 chars' },
+              minLength: {
+                value: 6,
+                message: 'password must be more than 5 chars',
+              },
             })}
             className="w-full"
             id="password"
@@ -119,7 +122,7 @@ export default function LoginScreen() {
               validate: (value) => value === getValues('password'),
               minLength: {
                 value: 6,
-                message: 'confirm password is more than 5 chars',
+                message: 'confirm password must be more than 5 chars',
               },
             })}
           />
