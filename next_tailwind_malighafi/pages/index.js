@@ -42,7 +42,7 @@ export default function Home({ products, featuredProducts }) {
 
   return (
     <Layout>
-      <div className="sticky top-0 z-40 h-32 md:h-42 lg:h-52 overflow-hidden">
+      <div className=" h-32 md:h-42 lg:h-52 overflow-hidden">
         <Carousel products={featuredProducts}></Carousel>
       </div>
       {/* <h1 className="h2 my-4 text-2xl">Latest Products</h1> */}

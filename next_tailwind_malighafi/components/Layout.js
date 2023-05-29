@@ -83,11 +83,11 @@ export default function Layout({ title, children }) {
               {status === 'loading' ? (
                 'Loading..'
               ) : session?.user ? (
-                <Menu as="div" className="relative inline-block z-50">
+                <Menu as="div" className="relative shadow-lg inline-block z-60">
                   <Menu.Button className="text-blue-600 mr-4">
                     {session.user.name}
                   </Menu.Button>
-                  <Menu.Items className="absolute right-0 w-56 origin-top-right  shadow-lg bg-green-100">
+                  <Menu.Items className="absolute card bg-white opacity-100 shadow right-5 w-40 origin-top-right">
                     <Menu.Item>
                       <DropdownLink className="dropdown-link" href="/profile">
                         Profile
@@ -98,7 +98,7 @@ export default function Layout({ title, children }) {
                         className="dropdown-link"
                         href="/order-history"
                       >
-                        Order History
+                        Orders
                       </DropdownLink>
                     </Menu.Item>
                     {session.user.isAdmin && (
@@ -107,7 +107,7 @@ export default function Layout({ title, children }) {
                           className="dropdown-link"
                           href="/admin/dashboard"
                         >
-                          Admin Dashboard
+                          Admin
                         </DropdownLink>
                       </Menu.Item>
                     )}
