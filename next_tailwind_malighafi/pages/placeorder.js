@@ -182,7 +182,7 @@ export default function PlaceOrderScreen() {
                   <button
                     disabled={loading}
                     onClick={placeOrderHandler}
-                    className="primary-button w-full"
+                    className="primary-button text-white w-full"
                   >
                     {loading ? 'Loading...' : 'Place Order'}
                   </button>

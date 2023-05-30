@@ -151,14 +151,6 @@ export async function getServerSideProps() {
   await db.connect();
   const data = await Product.find().lean();
   const products = JSON.parse(JSON.stringify(data));
-  // products.forEach((product) => {
-  //   if (product.compatibleVehicles) {
-  //     product.compatibleVehicles = product.compatibleVehicles.map((vehicle) => {
-  //       const { _id, ...vehicleWithoutId } = vehicle;
-  //       return vehicleWithoutId;
-  //     });
-  //   }
-  // });
   const featuredProducts = await Product.find({ isFeatured: true }).lean();
   await db.disconnect();
   return {

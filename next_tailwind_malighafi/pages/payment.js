@@ -71,7 +71,7 @@ export default function PaymentScreen() {
           >
             Back
           </button>
-          <button type="submit" className="primary-button">
+          <button type="submit" className="primary-button text-white">
             Next
           </button>
         </div>

@@ -20,7 +20,7 @@ export default function ProductItem({ product, addToCartHandler }) {
         {product.compatibleVehicles &&
           product.compatibleVehicles.length > 0 && (
             <div className="mb-2">
-              <strong>Compatibility:</strong>
+              <strong>Compatibility</strong>
               <ul>
                 {product.compatibleVehicles.map((vehicle, index) => (
                   <li key={index}>
@@ -31,7 +31,7 @@ export default function ProductItem({ product, addToCartHandler }) {
             </div>
           )}
         <button
-          className="primary-button"
+          className="primary-button text-white"
           type="button"
           onClick={() => addToCartHandler(product)}
         >
