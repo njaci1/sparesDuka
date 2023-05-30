@@ -62,7 +62,7 @@ export default function Home({ products, featuredProducts }) {
               placeholder="Search products"
             />
             <button
-              className="rounded rounded-tl-none rounded-bl-none bg-amber-300 p-1 text-sm dark:text-black"
+              className="rounded rounded-tl-none rounded-bl-none bg-white-300 p-1 text-sm dark:text-black"
               type="submit"
               id="button-addon2"
             >
