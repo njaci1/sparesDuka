@@ -10,6 +10,7 @@ import DropdownLink from './DropdownLink';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import SearchIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon';
+// import ShoppingCartIcon from '@heroicons/react/outline/ShoppingCartIcon';
 
 export default function Layout({ title, children }) {
   const { status, data: session } = useSession();
@@ -73,6 +74,7 @@ export default function Layout({ title, children }) {
             <div>
               <Link id="link" className="p-2" href="/cart">
                 Cart
+                {/* <ShoppingCartIcon className="h-5 w-5"></ShoppingCartIcon> */}
                 {cartItemsCount > 0 && (
                   <span className="ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">
                     {cartItemsCount}
