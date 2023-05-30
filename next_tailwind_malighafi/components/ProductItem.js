@@ -17,7 +17,7 @@ export default function ProductItem({ product, addToCartHandler }) {
         </Link>
         <p className="mb-2">{product.brand}</p>
         <p className="mb-2">ksh.{product.price}</p>
-        {product.compatibleVehicles &&
+        {/* {product.compatibleVehicles &&
           product.compatibleVehicles.length > 0 && (
             <div className="mb-2">
               <strong>Compatibility</strong>
@@ -29,7 +29,7 @@ export default function ProductItem({ product, addToCartHandler }) {
                 ))}
               </ul>
             </div>
-          )}
+          )} */}
         <button
           className="primary-button text-white"
           type="button"

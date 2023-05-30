@@ -129,7 +129,7 @@ export default function AdminProductsScreen() {
             <button
               disabled={loadingCreate}
               onClick={createHandler}
-              className="primary-button"
+              className="primary-button text-white"
             >
               {loadingCreate ? 'Creating...' : 'Create Product'}
             </button>
