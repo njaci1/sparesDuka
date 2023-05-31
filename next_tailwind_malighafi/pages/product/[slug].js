@@ -65,19 +65,26 @@ export default function ProductScreen(props) {
               </h1>
             </li>
             <li>
-              <p className="text-sm">Brand: {product.brand}</p>
-            </li>
-            <li>
-              <p className="text-sm">Category: {product.category}</p>
+              <p className="text-sm">
+                <strong>Brand:</strong> {product.brand}
+              </p>
             </li>
             <li>
               <p className="text-sm">
-                Rating: {''}
+                <strong>Category: </strong>
+                {product.category}
+              </p>
+            </li>
+            <li>
+              <p className="text-sm">
+                <strong>Rating: {''}</strong>
                 {product.rating} of {product.numReviews} reviews
               </p>
             </li>
             <li>
-              <p className="text-sm">Description: {product.description}</p>
+              <p className="text-sm">
+                <strong>Description:</strong> {product.description}
+              </p>
             </li>
           </ul>
           {product.compatibleVehicles &&
