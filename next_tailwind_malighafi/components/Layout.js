@@ -46,8 +46,8 @@ export default function Layout({ title, children }) {
       </Head>
       <ToastContainer position="bottom-center" limit={1} />
       <div className="flex min-h-full flex-col justify-between">
-        <header className="shadow bg-white sticky top-0 z-50">
-          <nav className="flex h-12 justify-between shadow-md items-center ">
+        <header className=" bg-white sticky top-0 z-50">
+          <nav className="flex h-12 justify-between items-center ">
             <Link id="link" className="text-lg font-bold ml-4" href="/">
               MaliGhafi
             </Link>
@@ -85,11 +85,11 @@ export default function Layout({ title, children }) {
               {status === 'loading' ? (
                 'Loading..'
               ) : session?.user ? (
-                <Menu as="div" className="relative shadow-lg inline-block z-60">
+                <Menu as="div" className="relative inline-block z-60">
                   <Menu.Button className="text-blue-600 mr-4">
                     {session.user.name}
                   </Menu.Button>
-                  <Menu.Items className="absolute card bg-white opacity-100 shadow right-5 w-40 origin-top-right">
+                  <Menu.Items className="absolute card bg-white opacity-100 right-5 w-40 origin-top-right">
                     <Menu.Item>
                       <DropdownLink className="dropdown-link" href="/profile">
                         Profile
