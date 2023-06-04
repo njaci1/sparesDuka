@@ -132,7 +132,7 @@ export default function Layout({ title, children }) {
             </div>
           </nav>
         </header>
-        <main className="container m-auto mt-4 px-4 justify-center items-center">
+        <main className="container m-auto  px-4 justify-center items-center">
           {children}
         </main>
         <footer className="flex h-10 justify-center items-center shadow-inner">
