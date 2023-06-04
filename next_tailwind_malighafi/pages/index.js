@@ -151,7 +151,8 @@ export async function getServerSideProps() {
   await db.connect();
   const data = await Product.find().lean();
   const products = JSON.parse(JSON.stringify(data));
-  const featuredProducts = await Product.find({ isFeatured: true }).lean();
+  const featuredProductsData = await Product.find({ isFeatured: true }).lean();
+  const featuredProducts = JSON.parse(JSON.stringify(featuredProductsData));
   await db.disconnect();
   return {
     props: {

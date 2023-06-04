@@ -8,6 +8,7 @@ import { useEffect, useReducer } from 'react';
 import Layout from '../../components/Layout';
 import { getError } from '../../utils/error';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -41,18 +42,18 @@ function reducer(state, action) {
     case 'PAY_RESET':
       return { ...state, loadingPay: false, successPay: false, errorPay: '' };
 
-    // case 'DELIVER_REQUEST':
-    //   return { ...state, loadingDeliver: true };
-    // case 'DELIVER_SUCCESS':
-    //   return { ...state, loadingDeliver: false, successDeliver: true };
-    // case 'DELIVER_FAIL':
-    //   return { ...state, loadingDeliver: false };
-    // case 'DELIVER_RESET':
-    //   return {
-    //     ...state,
-    //     loadingDeliver: false,
-    //     successDeliver: false,
-    //   };
+    case 'DELIVER_REQUEST':
+      return { ...state, loadingDeliver: true };
+    case 'DELIVER_SUCCESS':
+      return { ...state, loadingDeliver: false, successDeliver: true };
+    case 'DELIVER_FAIL':
+      return { ...state, loadingDeliver: false };
+    case 'DELIVER_RESET':
+      return {
+        ...state,
+        loadingDeliver: false,
+        successDeliver: false,
+      };
 
     default:
       state;
@@ -73,9 +74,8 @@ function OrderScreen() {
       order,
       successPay,
       loadingPay,
-
-      //   loadingDeliver,
-      //   successDeliver,
+      loadingDeliver,
+      successDeliver,
     },
     dispatch,
   ] = useReducer(reducer, {
@@ -98,7 +98,7 @@ function OrderScreen() {
       !order._id ||
       // successPush ||
       successPay ||
-      // || successDeliver ||
+      successDeliver ||
       (order._id && order._id !== orderId)
     ) {
       fetchOrder();
@@ -108,9 +108,9 @@ function OrderScreen() {
       // if (successPush) {
       //     dispatch({ type: 'PUSH_SUCCESS' });
       //   }
-      //   if (successDeliver) {
-      //     dispatch({ type: 'DELIVER_RESET' });
-      //   }
+      if (successDeliver) {
+        dispatch({ type: 'DELIVER_RESET' });
+      }
     } else {
       // const loadPaypalScript = async () => {
       //   const { data: clientId } = await axios.get('/api/keys/paypal');
@@ -129,7 +129,7 @@ function OrderScreen() {
     order,
     orderId,
     // successPush,
-    // successDeliver,
+    successDeliver,
     successPay,
   ]);
   const {
@@ -221,20 +221,20 @@ function OrderScreen() {
   //   toast.error(getError(err));
   // }
 
-  // async function deliverOrderHandler() {
-  //   try {
-  //     dispatch({ type: 'DELIVER_REQUEST' });
-  //     const { data } = await axios.put(
-  //       `/api/admin/orders/${order._id}/deliver`,
-  //       {}
-  //     );
-  //     dispatch({ type: 'DELIVER_SUCCESS', payload: data });
-  //     toast.success('Order is delivered');
-  //   } catch (err) {
-  //     dispatch({ type: 'DELIVER_FAIL', payload: getError(err) });
-  //     toast.error(getError(err));
-  //   }
-  // }
+  async function deliverOrderHandler() {
+    try {
+      dispatch({ type: 'DELIVER_REQUEST' });
+      const { data } = await axios.put(
+        `/api/admin/orders/${order._id}/deliver`,
+        {}
+      );
+      dispatch({ type: 'DELIVER_SUCCESS', payload: data });
+      toast.success('Order is delivered');
+    } catch (err) {
+      dispatch({ type: 'DELIVER_FAIL', payload: getError(err) });
+      toast.error(getError(err));
+    }
+  }
 
   return (
     <Layout title={`Order ${orderId}`}>
@@ -399,13 +399,13 @@ function OrderScreen() {
                   )}
                 {session.user.isAdmin && order.isPaid && !order.isDelivered && (
                   <li>
-                    {/* {loadingDeliver && <div>Loading...</div>}
+                    {loadingDeliver && <div>Loading...</div>}
                     <button
                       className="primary-button w-full"
                       onClick={deliverOrderHandler}
                     >
                       Deliver Order
-                    </button> */}
+                    </button>
                   </li>
                 )}
               </ul>
