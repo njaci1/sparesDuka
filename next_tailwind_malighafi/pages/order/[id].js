@@ -314,6 +314,11 @@ function OrderScreen() {
                 </tbody>
               </table>
             </div>
+            <div className="py-1 flex justify-center">
+              <Link id="link" href="/admin/orders">
+                Back to all orders
+              </Link>
+            </div>
           </div>
           <div>
             <div className="card  p-5">
@@ -409,6 +414,11 @@ function OrderScreen() {
                   </li>
                 )}
               </ul>
+            </div>
+            <div className="py-1 flex justify-center">
+              <Link id="link" href="/admin/orders">
+                Back to all orders
+              </Link>
             </div>
           </div>
         </div>
