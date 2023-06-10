@@ -93,59 +93,61 @@ export default function AdminProductEditScreen() {
   const router = useRouter();
 
   const uploadHandler = async (e, imageField = 'image') => {
-    //   const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
-    //   try {
-    //     dispatch({ type: 'UPLOAD_REQUEST' });
-    //     const {
-    //       data: { signature, timestamp },
-    //     } = await axios('/api/admin/cloudinary-sign');
-
-    //     const file = e.target.files[0];
-    //     const formData = new FormData();
-    //     formData.append('file', file);
-    //     formData.append('signature', signature);
-    //     formData.append('timestamp', timestamp);
-    //     formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
-    //     const { data } = await axios.post(url, formData);
-    //     dispatch({ type: 'UPLOAD_SUCCESS' });
-    //     setValue(imageField, data.secure_url);
-    //     toast.success('File uploaded successfully');
-    //   } catch (err) {
-    //     dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
-    //     toast.error(getError(err));
-    //   }
     e.preventDefault();
-
+    const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
     try {
       dispatch({ type: 'UPLOAD_REQUEST' });
+      const {
+        data: { signature, timestamp },
+      } = await axios('/api/admin/cloudinary-sign');
 
       const file = e.target.files[0];
       const formData = new FormData();
-      console.log(file.name);
-
       formData.append('file', file);
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      };
-
-      const response = await axios.post(
-        '/api/admin/products/upload',
-        formData,
-        config
-      );
-
-      if (response.data.message === 'File uploaded successfully') {
-        const imageUrl = `/images/${file.name}`;
-        dispatch({ type: 'UPLOAD_SUCCESS' });
-        setValue(imageField, imageUrl);
-        toast.success('File uploaded successfully');
-      }
+      formData.append('signature', signature);
+      formData.append('timestamp', timestamp);
+      formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
+      const { data } = await axios.post(url, formData);
+      dispatch({ type: 'UPLOAD_SUCCESS' });
+      setValue(imageField, data.secure_url);
+      toast.success('File uploaded successfully');
     } catch (err) {
       dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
       toast.error(getError(err));
     }
+
+    // uploading to local storage /public/images
+    // e.preventDefault();
+    // try {
+    //   dispatch({ type: 'UPLOAD_REQUEST' });
+
+    //   const file = e.target.files[0];
+    //   const formData = new FormData();
+    //   console.log(file.name);
+
+    //   formData.append('file', file);
+    //   const config = {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data',
+    //     },
+    //   };
+
+    //   const response = await axios.post(
+    //     '/api/admin/products/upload',
+    //     formData,
+    //     config
+    //   );
+
+    //   if (response.data.message === 'File uploaded successfully') {
+    //     const imageUrl = `/images/${file.name}`;
+    //     dispatch({ type: 'UPLOAD_SUCCESS' });
+    //     setValue(imageField, imageUrl);
+    //     toast.success('File uploaded successfully');
+    //   }
+    // } catch (err) {
+    //   dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
+    //   toast.error(getError(err));
+    // }
   };
 
   const submitHandler = async ({
