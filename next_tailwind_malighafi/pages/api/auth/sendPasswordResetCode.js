@@ -13,7 +13,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 async function handler(req, res) {
   if (req.method !== 'POST') {
-    return;
+    return res.status(400).send({ message: `${req.method} not supported` });
   }
   const { email } = req.body;
 
