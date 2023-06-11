@@ -97,7 +97,7 @@ export default function LoginScreen() {
             Register
           </Link>
           &nbsp; Forgot Password?{' '}
-          <Link id="link" href={`/forgotPassword?redirect=${redirect || '/'}`}>
+          <Link id="link" href={`/resetPassword?redirect=${redirect || '/'}`}>
             Reset Password
           </Link>
         </div>
