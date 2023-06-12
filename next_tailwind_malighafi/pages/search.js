@@ -228,7 +228,7 @@ export async function getServerSideProps({ query }) {
   const brand = query.brand || '';
   const price = query.price || '';
   const rating = query.rating || '';
-  const sort = query.sort || '';
+  // const sort = query.sort || '';
   const searchQuery = query.query || '';
 
   const queryFilter =
@@ -260,25 +260,25 @@ export async function getServerSideProps({ query }) {
           },
         }
       : {};
-  const order =
-    sort === 'featured'
-      ? { isFeatured: -1 }
-      : sort === 'lowest'
-      ? { price: 1 }
-      : sort === 'highest'
-      ? { price: -1 }
-      : sort === 'toprated'
-      ? { rating: -1 }
-      : sort === 'newest'
-      ? { createdAt: -1 }
-      : { _id: -1 };
+  // const order =
+  //   sort === 'featured'
+  //     ? { isFeatured: -1 }
+  //     : sort === 'lowest'
+  //     ? { price: 1 }
+  //     : sort === 'highest'
+  //     ? { price: -1 }
+  //     : sort === 'toprated'
+  //     ? { rating: -1 }
+  //     : sort === 'newest'
+  //     ? { createdAt: -1 }
+  //     : { _id: -1 };
 
   await db.connect();
   const data_categories = await Product.find().distinct('category');
   const categories = JSON.parse(JSON.stringify(data_categories));
   const data_brands = await Product.find().distinct('brand');
   const brands = JSON.parse(JSON.stringify(data_brands));
-  const productDocs = await Product.find(
+  const data_productDocs = await Product.find(
     {
       ...queryFilter,
       ...categoryFilter,
@@ -287,19 +287,22 @@ export async function getServerSideProps({ query }) {
       ...ratingFilter,
     },
     '-reviews'
-  )
-    .sort(order)
-    .skip(pageSize * (page - 1))
-    .limit(pageSize)
-    .lean();
+  );
+  const productDocs = JSON.parse(JSON.stringify(data_productDocs));
+  // productDocs
+  //   .sort(order)
+  //   .skip(pageSize * (page - 1))
+  //   .limit(pageSize)
+  //   .lean();
 
-  const countProducts = await Product.countDocuments({
+  const data_countProducts = await Product.countDocuments({
     ...queryFilter,
     ...categoryFilter,
     ...priceFilter,
     ...brandFilter,
     ...ratingFilter,
   });
+  const countProducts = JSON.parse(JSON.stringify(data_countProducts));
 
   await db.disconnect();
   const products = productDocs.map(db.convertDocToObj);

@@ -1,3 +1,4 @@
+/* eslint-disable no-const-assign */
 // import React, { useEffect } from 'react';
 import Layout from '../components/Layout';
 import Link from 'next/link';
@@ -25,6 +26,7 @@ export default function ForgotPasswordScreen() {
         email,
       });
       console.log(result.status);
+
       toast.success(' password link sent to you email successfully');
 
       if (result.error) {
@@ -64,6 +66,7 @@ export default function ForgotPasswordScreen() {
         <div className="mb-4">
           <button className="primary-button">Send Reset Code</button>
         </div>
+        <div className="mb-4"></div>
         <div className="mb-4">
           Don&apos;t have an account?{' '}
           {/* //&apos is apostrophe(') and &nbsp is admin-admin2 Gv9-5kajZ952@Bn

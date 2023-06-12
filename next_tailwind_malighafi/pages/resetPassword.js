@@ -15,7 +15,6 @@ export default function ResetPasswordScreen() {
 
   useEffect(() => {
     if (session?.user) {
-      console.log('user found');
       router.push(redirect || '/');
     }
   }, [router, session, redirect]);
