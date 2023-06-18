@@ -12,9 +12,9 @@ export default async function checkout(phoneNumber, amount) {
 
   const auth = btoa(process.env.MPESA_AUTH_CODE);
   // get passkey options
-  var urlAuth =
-    'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials';
-  //process.env.MPESA_AUTH_URL;
+  var urlAuth = process.env.MPESA_AUTH_URL;
+  // 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials';
+  // process.env.MPESA_AUTH_URL;
 
   const optionsAuth = {
     headers: {
@@ -28,8 +28,8 @@ export default async function checkout(phoneNumber, amount) {
       const token = data.access_token;
       console.log('successfully fetched token');
 
-      const url =
-        'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
+      const url = process.env.MPESA_PUSH_URL;
+      // 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
 
       const passkey = process.env.MPESA_KEY;
       // 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919';
@@ -50,8 +50,8 @@ export default async function checkout(phoneNumber, amount) {
           PartyA: phoneNumber,
           PartyB: 174379,
           PhoneNumber: phoneNumber,
-          CallBackURL:
-            'https://next-tailwind-ecoms.vercel.app/api/mpesa/callback',
+          CallBackURL: process.env.MPESA_CALLBACK_URL,
+          // 'https://next-tailwind-ecoms.vercel.app/api/mpesa/callback',
           //process.env.MPESA_CALLBACK_URL,
           AccountReference: 'CompanyXLTD',
           TransactionDesc: 'Payment of X',
