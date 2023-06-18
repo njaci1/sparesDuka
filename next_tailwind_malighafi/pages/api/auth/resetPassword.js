@@ -8,7 +8,6 @@ async function handler(req, res) {
   }
 
   const { email, password, code } = req.body;
-  console.log(email, password, code);
 
   if (!code || !email || (password && password.trim().length < 5)) {
     res.status(422).json({

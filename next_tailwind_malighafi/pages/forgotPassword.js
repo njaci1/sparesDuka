@@ -1,9 +1,9 @@
 /* eslint-disable no-const-assign */
 // import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
-
 import { getError } from '../utils/error';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
@@ -20,14 +20,17 @@ export default function ForgotPasswordScreen() {
     formState: { errors },
   } = useForm();
 
+  const [requestStatus, setRequestStatus] = useState(null);
+
   const submitHandler = async ({ email }) => {
     try {
       const result = await axios.post('/api/auth/sendPasswordResetCode', {
         email,
       });
-      console.log(result.status);
 
-      toast.success(' password link sent to you email successfully');
+      setRequestStatus(result.status); // Set the status to state
+
+      toast.success(' password link sent to your email successfully');
 
       if (result.error) {
         toast.error(result.error);
@@ -36,6 +39,7 @@ export default function ForgotPasswordScreen() {
       toast.error(getError(err));
     }
   };
+
   return (
     <Layout title="Forgot Password">
       <form
@@ -64,13 +68,15 @@ export default function ForgotPasswordScreen() {
         </div>
 
         <div className="mb-4">
-          <button className="primary-button">Send Reset Code</button>
+          <button className="primary-button" disabled={requestStatus === 200}>
+            Send Reset Code
+          </button>
+          {requestStatus === 200 && (
+            <p>Password reset link has been sent to your email.</p>
+          )}
         </div>
-        <div className="mb-4"></div>
         <div className="mb-4">
           Don&apos;t have an account?{' '}
-          {/* //&apos is apostrophe(') and &nbsp is admin-admin2 Gv9-5kajZ952@Bn
-          space */}
           <Link id="link" href={`/register?redirect=${redirect || '/'}`}>
             Register
           </Link>

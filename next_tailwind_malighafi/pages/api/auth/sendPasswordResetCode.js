@@ -21,7 +21,7 @@ async function handler(req, res) {
   const userToReset = await user.findOne({ email: email });
   if (userToReset) {
     const verificationCode = generateVerificationCode();
-    console.log(verificationCode);
+
     userToReset.passwordResetCode = verificationCode;
     await userToReset.save();
     await db.disconnect();
