@@ -63,7 +63,7 @@ export default async function checkout(phoneNumber, amount) {
         .then((res) => res.json())
         .then((data) => {
           // insert this request to db
-          console.log('successfully pushed to mpesa: ');
+          console.log('successfully pushed to mpesa' + data.ResponseCode);
           if (data.ResponseCode == 0) {
             console.log('push request successful to users phone');
 
