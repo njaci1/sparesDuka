@@ -27,7 +27,8 @@ async function handler(req, res) {
     await db.disconnect();
 
     // Send the email
-    const resetLink = 'http://localhost:3000/resetPassword';
+    const resetLink =
+      'https://spares-duka-71o2-7h0t71j88-njaci1.vercel.app/resetPassword';
 
     let message = `Please use this ${verificationCode} to reset your password. Use this link ${resetLink}`;
 
