@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
-export default function Carousel({ products }) {
+function Carousel({ products }) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -14,19 +14,21 @@ export default function Carousel({ products }) {
   return (
     <div style={{ position: 'relative' }}>
       <AnimatePresence initial={false}>
-        <motion.img
-          key={products[index]._id}
-          src={products[index].banner}
-          alt={products[index].name}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 5 }} // Adjust the duration as needed
-          style={{ width: '100%', height: 'auto', position: 'absolute' }}
-        />
+        {products[index] && products[index].banner && (
+          <motion.img
+            key={products[index]._id}
+            src={products[index].banner}
+            alt={products[index].name}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 5 }} // Adjust the duration as needed
+            style={{ width: '100%', height: 'auto', position: 'absolute' }}
+          />
+        )}
       </AnimatePresence>
     </div>
   );
 }
 
-// export default Carousel;
+export default Carousel;
