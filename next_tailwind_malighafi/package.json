@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.14",
+    "@headlessui/react": "^1.7.15",
     "@heroicons/react": "^2.0.17",
     "@paypal/react-paypal-js": "^7.8.3",
     "@sendgrid/mail": "^7.7.0",
